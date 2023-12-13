@@ -26,6 +26,6 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamreader(process.inputStream))
-        println("### Cache size = ${bufferedReader.readLine()})
+        println("### Cache size = ${bufferedReader.readLine()}")
     }
 }
