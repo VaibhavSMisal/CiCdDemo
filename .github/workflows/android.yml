@@ -33,4 +33,6 @@ jobs:
             adb devices
             ./gradlew installDebug
             adb shell am start -n com.example.cicddemoapp/.MainActivity
-            adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
+            echo "old cache" | adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
+            ./gradlew connectedCheck --continue
+            echo "new cache" | adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
