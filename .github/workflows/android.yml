@@ -35,4 +35,5 @@ jobs:
             adb shell am start -n com.example.cicddemoapp/.MainActivity
             echo "old cache" | adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
             ./gradlew connectedCheck --continue
+            adb shell am start -n com.example.cicddemoapp/.MainActivity
             echo "new cache" | adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
