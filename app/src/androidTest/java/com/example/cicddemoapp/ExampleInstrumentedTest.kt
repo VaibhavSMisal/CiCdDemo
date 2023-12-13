@@ -20,5 +20,17 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.cicddemoapp", appContext.packageName)
+
+        val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
+        process.waitFor()
+        val bufferedReader = BufferedReader(InputStreamreader(process.inputStream))
+        val s = bufferedReader.readLine()
+        println("### Cache size = $s")
+        
+        val bundle = Bundle()
+        bundle.putString(
+            Instrumentation.REPORT_KEY_STREAMRESULT, s
+        )
+        InstrumentationRegistry.getInstrumentation().sendStatus(0, bundle)
     }
 }
