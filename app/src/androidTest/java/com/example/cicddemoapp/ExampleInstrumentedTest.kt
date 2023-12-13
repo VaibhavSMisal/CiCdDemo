@@ -5,6 +5,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 import org.junit.Assert.*
 
@@ -20,5 +22,10 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.cicddemoapp", appContext.packageName)
+
+        val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
+        process.waitFor()
+        val bufferedReader = BufferedReader(InputStreamreader(process.inputStream))
+        println("### Cache size = ${bufferedReader.readLine()})
     }
 }
