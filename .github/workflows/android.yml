@@ -32,6 +32,6 @@ jobs:
           script: |
             adb devices
             ./gradlew installDebug
-            adb shell am start -n com.example.cicddemoapp/.MainActivity
+            # adb shell am start -n com.example.cicddemoapp/.MainActivity
             ./gradlew connectedCheck --continue
             adb logcat -d | grep "Cache size"
