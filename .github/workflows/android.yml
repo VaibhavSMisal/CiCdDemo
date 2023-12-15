@@ -32,11 +32,11 @@ jobs:
           script: |
             adb devices
             ./gradlew installDebug
-            adb shell am start -n com.example.cicddemoapp/.MainActivity
-            echo "old cache" | adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
-            ./gradlew connectedCheck --continue
-            adb logcat -d | grep "Cache size"
-            
-            # adb shell cmd package list packages
+            adb shell cmd package list packages
             # adb shell am start -n com.example.cicddemoapp/.MainActivity
-            # echo "new cache" | adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
+            # echo "old cache" | adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
+            ./gradlew connectedCheck --continue
+            adb shell cmd package list packages
+            # adb logcat -d | grep "Cache size"
+            adb shell am start -n com.example.cicddemoapp/.MainActivity
+            echo "new cache" | adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
