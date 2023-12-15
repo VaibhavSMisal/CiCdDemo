@@ -30,11 +30,5 @@ class ExampleInstrumentedTest {
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
         val s = bufferedReader.readLine()
         println("### Cache size = $s")
-        
-        val bundle = Bundle()
-        bundle.putString(
-            Instrumentation.REPORT_KEY_STREAMRESULT, s
-        )
-        InstrumentationRegistry.getInstrumentation().sendStatus(0, bundle)
     }
 }
