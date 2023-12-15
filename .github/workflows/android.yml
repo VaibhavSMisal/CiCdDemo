@@ -34,7 +34,8 @@ jobs:
             ./gradlew installDebug
             adb shell am start -n com.example.cicddemoapp/.MainActivity
             echo "old cache" | adb shell run-as com.example.cicddemoapp du -sh /data/data/com.example.cicddemoapp/cache
-            adb shell am instrument -w com.example.cicddemoapp.test/androidx.test.runner.AndroidJUnitRunner
+            adb shell pm list instrumentation
+            adb shell am instrument -w com.example.cicddemoapp/androidx.test.runner.AndroidJUnitRunner
             # ./gradlew connectedCheck --continue
             adb shell cmd package list packages
             # adb logcat -d | grep "Cache size"
