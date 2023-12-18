@@ -50,6 +50,7 @@ jobs:
           path: app/emulator.log
 
   cache_usage_display:
+    permissions: read-all
     needs: cache_usage_calculate
     runs-on: ubuntu-latest
 
