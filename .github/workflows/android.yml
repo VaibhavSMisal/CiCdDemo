@@ -41,13 +41,13 @@ jobs:
         run: |
           touch app/emulator.log
           chmod 777 app/emulator.log
-          echo "Writing something random to file to save time" >> app/emulator.txt &
+          echo "Writing something random to file to save time" >> app/emulator.html &
 
       - name: Upload logs
         uses: actions/upload-artifact@v2
         with:
           name: cache_logs
-          path: app/emulator.txt
+          path: app/emulator.html
 
   cache_usage_display:
     permissions: read-all
@@ -65,7 +65,7 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const cacheLogsFileContent = fs.readFileSync('app/emulator.txt', 'utf8')
+            const cacheLogsFileContent = fs.readFileSync('app/emulator.html', 'utf8')
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
