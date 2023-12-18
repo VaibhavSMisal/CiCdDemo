@@ -35,6 +35,7 @@ jobs:
             touch app/emulator.log
             chmod 777 app/emulator.log
             ./gradlew :app:connectedCheck --continue
+            adb logcat -d | grep "Cache size" 
             adb logcat -d | grep "Cache size" >> app/emulator.log &
 
       # - name: Writing in file
