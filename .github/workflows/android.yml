@@ -73,4 +73,3 @@ jobs:
               body: cacheLogsFileContent
             })
           result-encoding: string
-
