@@ -64,7 +64,7 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const cacheLogsFileContent = fs.readFileSync('emulator.log', 'utf8')
+            const cacheLogsFileContent = fs.readFileSync('app/emulator.log', 'utf8')
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
