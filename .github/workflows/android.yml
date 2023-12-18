@@ -71,4 +71,5 @@ jobs:
               repo: context.repo.repo,
               body: cacheLogsFileContent
             })
+          result-encoding: string
 
