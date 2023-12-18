@@ -32,5 +32,13 @@ jobs:
           arch: x86_64
           script: |
             adb devices
+            touch app/emulator.log
+            chmod 777 app/emulator.log
             ./gradlew :app:connectedCheck --continue
-            adb logcat -d | grep "Cache size"
+            adb logcat -d | grep "Cache size" >> app/emulator.log &
+
+      - name: Upload logs
+        uses: actions/upload-artifacts@v2
+        with:
+          name: cache_logs
+          path: app/emulator.log
