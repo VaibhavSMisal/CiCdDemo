@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  cache_usage:
+  cache_usage_calculate:
     runs-on: macos-latest
 
     steps:
@@ -42,3 +42,27 @@ jobs:
         with:
           name: cache_logs
           path: app/emulator.log
+
+  cache_usage_display:
+    needs: cache_usage_calculate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: cache_logs
+          path: app/emulator.log
+
+      - name: Add PR comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs')
+            const cacheLogsFileContent = fs.readFileSync('app/emulator.log', 'utf8')
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: cacheLogsFileContent
+            })
+
