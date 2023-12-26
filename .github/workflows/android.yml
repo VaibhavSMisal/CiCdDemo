@@ -46,7 +46,7 @@ jobs:
       - name : Write logs
         id: cache_size
         run : |
-          echo "CACHE_SIZE=$( echo "12-18 14:33:33.993 2803 2933 I System.out: ### Cache size First = 8.0K /data/data/com.example.cicddemoapp/cache" )" >> "$GITHUB_OUTPUT"
+          echo "CACHE_SIZE=$( echo "12-18 14:33:33.993 2803 2933 I System.out: Cache size First = 8.0K /data/data/com.example.cicddemoapp/cache" )" >> "$GITHUB_OUTPUT"
     
       - name : Run python script
         id: python_script
