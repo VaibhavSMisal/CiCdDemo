@@ -23,8 +23,9 @@ def generate_cache_usage_html():
     with open("cache_usage_report.html", "w") as file:
         file.write(html)
 
-file = open(sys.argv[1], "r")
-table_data = file.read()
+logFile = open(sys.argv[1], "r")
+table_data = logFile.read()
+logFile.close()
 print(table_data)
 table_list = table_data.split("\n")
 
