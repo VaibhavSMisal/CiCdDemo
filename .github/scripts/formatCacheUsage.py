@@ -33,3 +33,4 @@ table_list = table_data.split("\n")
 print(f"List:\n{table_list}")
 
 generate_cache_usage_html()
+
