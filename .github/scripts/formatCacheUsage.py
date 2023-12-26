@@ -6,6 +6,7 @@ def generate_cache_usage_html():
     html += f"<tr><th>Action in test-app</th><th>Cache usage(in Kb)</th></tr>"
 
     for line in table_list:
+        println(line)
         if "CacheSize:" in line:
             # Split the line by "=" to separate key and value
             key_value_pair = line.split("=")
@@ -24,6 +25,7 @@ def generate_cache_usage_html():
 
 file = open(sys.argv[1], "r")
 table_data = file.read()
+print(table_data)
 table_list = table_data.split("\n")
 
 generate_cache_usage_html()
