@@ -30,28 +30,26 @@ jobs:
       - name: Providing permissions
         run: chmod +x ./gradlew
 
-      # - name: Start emulator, Run tests, Display cache usage
-      #   uses: ReactiveCircus/android-emulator-runner@v2
-      #   with:
-      #     api-level: 31
-      #     target: google_apis
-      #     arch: x86_64
-      #     script: |
-      #       adb devices
-      #       touch app/emulator.log
-      #       chmod 777 app/emulator.log
-      #       ./gradlew :app:connectedCheck --continue
-      #       adb logcat -d | grep "Cache size" >> app/emulator.log &
-
-      - name : Write logs
+      - name: Start emulator, Run tests, Display cache usage
+        uses: ReactiveCircus/android-emulator-runner@v2
         id: cache_size
-        run : |
-          echo "CACHE_SIZE=$( echo "12-18 14:33:33.993 2803 2933 I System.out: CacheSize: First = 8.0K /data/data/com.example.cicddemoapp/cache\n12-18 14:33:38.808 2803 2933 I System.out: CacheSize: Second = 8.0K /data/data/com.example.cicddemoapp/cache\n12-18 14:33:42.637 2803 2933 I System.out: CacheSize: Third = 8.0K /data/data/com.example.cicddemoapp/cache" )" >> "$GITHUB_OUTPUT"
+        with:
+          api-level: 31
+          target: google_apis
+          arch: x86_64
+          script: |
+            adb devices
+            ./gradlew :app:connectedCheck --continue
+            echo "CACHE_SIZE=$(adb logcat -d | grep "Cache size")" >> "$GITHUB_OUTPUT"
+            
+      # - name : Write logs
+      #   id: cache_size
+      #   run : |
+      #     echo "CACHE_SIZE=$( echo "12-18 14:33:33.993 2803 2933 I System.out: CacheSize: First = 8.0K /data/data/com.example.cicddemoapp/cache\n12-18 14:33:38.808 2803 2933 I System.out: CacheSize: Second = 8.0K /data/data/com.example.cicddemoapp/cache\n12-18 14:33:42.637 2803 2933 I System.out: CacheSize: Third = 8.0K /data/data/com.example.cicddemoapp/cache" )" >> "$GITHUB_OUTPUT"
     
       - name : Run python script
         id: python_script
         run : |
-          echo ${{ steps.cache_size.outputs.CACHE_SIZE }}
           chmod +x ./.github/scripts/formatCacheUsage.py
           python3 ./.github/scripts/formatCacheUsage.py ${{ steps.cache_size.outputs.CACHE_SIZE }}
      
