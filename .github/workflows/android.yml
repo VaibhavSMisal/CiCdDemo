@@ -13,9 +13,6 @@ jobs:
   cache_usage_calculate:
     runs-on: macos-latest
 
-    outputs: 
-      cache_size: ${{ steps.cache_size.outputs.CACHE_SIZE }}
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -32,7 +29,6 @@ jobs:
 
       - name: Start emulator, Run tests, Display cache usage
         uses: ReactiveCircus/android-emulator-runner@v2
-        id: cache_size
         with:
           api-level: 31
           target: google_apis
@@ -44,13 +40,13 @@ jobs:
             ./gradlew :app:connectedCheck --continue
             adb logcat -d | grep "CacheSize:" >> app/emulator.log &
             
-      - name : Write logs
-        run : |
-          touch app/emulator.log
-          chmod 777 app/emulator.log
-          echo "12-18 14:33:33.993 2803 2933 I System.out: CacheSize: First = 8.0K /data/data/com.example.cicddemoapp/cache
-          12-18 14:33:33.993 2803 2933 I System.out: CacheSize: Second = 256.0K /data/data/com.example.cicddemoapp/cache
-          12-18 14:33:33.993 2803 2933 I System.out: CacheSize: Third = 260.0K /data/data/com.example.cicddemoapp/cache" >> app/emulator.log &
+      # - name : Write logs
+      #   run : |
+      #     touch app/emulator.log
+      #     chmod 777 app/emulator.log
+      #     echo "12-18 14:33:33.993 2803 2933 I System.out: CacheSize: First = 8.0K /data/data/com.example.cicddemoapp/cache
+      #     12-18 14:33:33.993 2803 2933 I System.out: CacheSize: Second = 256.0K /data/data/com.example.cicddemoapp/cache
+      #     12-18 14:33:33.993 2803 2933 I System.out: CacheSize: Third = 260.0K /data/data/com.example.cicddemoapp/cache" >> app/emulator.log &
 
       - name: Upload logs
         uses: actions/upload-artifact@v2
