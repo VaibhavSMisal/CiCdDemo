@@ -13,6 +13,9 @@ jobs:
   cache_usage_calculate:
     runs-on: macos-latest
 
+    outputs: 
+      cache_size: ${{ steps.cache_size.outputs.CACHE_SIZE }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -48,6 +51,7 @@ jobs:
       - name : Run python script
         id: python_script
         run : |
+          echo ${{ steps.cache_size.outputs.CACHE_SIZE }}
           chmod +x ./.github/scripts/formatCacheUsage.py
           python3 ./.github/scripts/formatCacheUsage.py ${{ steps.cache_size.outputs.CACHE_SIZE }}
      
