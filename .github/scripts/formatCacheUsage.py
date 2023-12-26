@@ -29,7 +29,7 @@ logFile = open(sys.argv[1], "r")
 table_data = logFile.read().strip()
 logFile.close()
 print(f"Table data = {table_data}")
-table_list = table_data.split("\n")
+table_list = table_data.split('\n')
 print(f"List:\n{table_list}")
 
 generate_cache_usage_html()
