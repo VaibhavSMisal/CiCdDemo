@@ -47,7 +47,13 @@ jobs:
           touch app/emulator.log
           chmod 777 app/emulator.log
           echo "12-18 14:33:33.993 2803 2933 I System.out: ### CachSize: First = 8.0K /data/data/com.example.cicddemoapp/cache\n12-18 14:33:33.993 2803 2933 I System.out: ### CachSize: Second = 256.0K /data/data/com.example.cicddemoapp/cache\n12-18 14:33:33.993 2803 2933 I System.out: ### CachSize: Third = 260.0K /data/data/com.example.cicddemoapp/cache" >> app/emulator.log &
-    
+
+      - name: Upload logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: cache_logs
+          path: app/emulator.log
+          
       - name : Run python script
         id: python_script
         run : |
