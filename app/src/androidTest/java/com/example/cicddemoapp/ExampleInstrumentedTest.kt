@@ -46,7 +46,7 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("### Cache size First = ${bufferedReader.readLine()}")
+        println("### CacheSize: First = ${bufferedReader.readLine()}")
     }
 
     @Test
@@ -59,7 +59,7 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("### Cache size Second = ${bufferedReader.readLine()}")
+        println("### CacheSize: Second = ${bufferedReader.readLine()}")
     }
 
     @Test
@@ -74,6 +74,6 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("### Cache size Third = ${bufferedReader.readLine()}")
+        println("### CacheSize: Third = ${bufferedReader.readLine()}")
     }
 }
