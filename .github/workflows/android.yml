@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ "main" ]
 
+env:
+  cache_usage_report_file: cache_usage_report.html
+  
 jobs:
   cache_usage_calculate:
     runs-on: macos-latest
@@ -38,38 +41,40 @@ jobs:
       #       adb logcat -d | grep "Cache size" >> app/emulator.log &
 
       - name : Write logs
+        id: cache_size
         run : |
-          touch app/emulator.log
-          chmod 777 app/emulator.log
-          echo "12-18 14:33:33.993 2803 2933 I System.out: ### Cache size First = 8.0K /data/data/com.example.cicddemoapp/cache" >> app/emulator.log &
+          echo "CACHE_SIZE=$( echo "12-18 14:33:33.993 2803 2933 I System.out: ### Cache size First = 8.0K /data/data/com.example.cicddemoapp/cache" )" >> "$GITHUB_OUTPUT"
     
-      - name: Upload logs
+      - name : Run python script
+        id: python_script
+        run : |
+          chmod +x ./.github/scripts/formatCacheUsage.py
+          python3 ./.github/scripts/formatCacheUsage.py ${{ steps.cache_size.outputs.CACHE_SIZE }}
+     
+      - name: Upload html file
         uses: actions/upload-artifact@v2
         with:
-          name: cache_logs
-          path: app/emulator.log
+          name: ${{ env.cache_usage_report_file }}
+          path: ${{ env.cache_usage_report_file }}
           
   cache_usage_display:
-    permissions: write-all
     needs: cache_usage_calculate
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: cache_logs
-          path: app
+          name: ${{ env.cache_usage_report_file }}
 
       - name: Add PR comment
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs')
-            const cacheLogsFileContent = fs.readFileSync('app/emulator.log', 'utf8')
+            const cacheLogsFileContent = fs.readFileSync('cache_usage_report.html', 'utf8')
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: cacheLogsFileContent
             })
-          result-encoding: string
