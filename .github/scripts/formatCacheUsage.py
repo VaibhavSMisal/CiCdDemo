@@ -26,7 +26,7 @@ def generate_cache_usage_html():
         file.write(html)
 
 logFile = open(sys.argv[1], "r")
-table_data = logFile.read()
+table_data = str(logFile.read())
 logFile.close()
 print(f"Table data = {table_data}")
 table_list = table_data.split("\n")
