@@ -30,17 +30,19 @@ jobs:
       - name: Providing permissions
         run: chmod +x ./gradlew
 
-      # - name: Start emulator, Run tests, Display cache usage
-      #   uses: ReactiveCircus/android-emulator-runner@v2
-      #   id: cache_size
-      #   with:
-      #     api-level: 31
-      #     target: google_apis
-      #     arch: x86_64
-      #     script: |
-      #       adb devices
-      #       ./gradlew :app:connectedCheck --continue
-      #       echo "CACHE_SIZE=$(adb logcat -d | grep "Cache size")" >> "$GITHUB_OUTPUT"
+      - name: Start emulator, Run tests, Display cache usage
+        uses: ReactiveCircus/android-emulator-runner@v2
+        id: cache_size
+        with:
+          api-level: 31
+          target: google_apis
+          arch: x86_64
+          script: |
+            adb devices
+            touch app/emulator.log
+            chmod 777 app/emulator.log
+            ./gradlew :app:connectedCheck --continue
+            adb logcat -d | grep "CacheSize:" >> app/emulator.log &
             
       - name : Write logs
         run : |
