@@ -5,20 +5,22 @@ def generate_cache_usage_html():
     html += "<table>"
     html += f"<tr><th>Action in test-app</th><th>Cache usage(in Kb)</th></tr>"
 
-    for i in range(0, len(table_list), 3):
-        html += f"<tr><td>{table_list[i]}</td>" \
-                f"<td>{table_list[i+1]}</td>" \
-                f"<td>{format_time(table_list[i+2])}</td></tr>"
+    for line in table_list:
+        if "CacheSize:" in line:
+            # Split the line by "=" to separate key and value
+            key_value_pair = line.split("=")
+            # Extract key and value
+            key = key_value_pair[0].split(":")[-1].strip()
+            value = key_value_pair[1].split()[0].strip()
 
+            html += f"<tr><td>{key}</td><td>{value}</td></tr>"
+    
     html += "</table></details></body></html>"
 
     with open("cache_usage_report.html", "w") as file:
         file.write(html)
 
-def format_time(time):
-        return f"{time} sec"
-
 table_data = sys.argv[1]
-table_list = table_data.split(",")
+table_list = table_data.split("\n")
 
 generate_cache_usage_html()
