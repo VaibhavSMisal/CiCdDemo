@@ -37,6 +37,7 @@ class ExampleInstrumentedTest {
     fun setUp() {
         activityRule.scenario.onActivity { activity: MainActivity -> decorView = activity.window.decorView }
     }
+    
     @Test
     fun test1() {
         // Context of the app under test.
@@ -46,7 +47,7 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("### CacheSize: First = ${bufferedReader.readLine()}")
+        println("Module1#CacheSize: First = ${bufferedReader.readLine()}")
     }
 
     @Test
@@ -59,7 +60,7 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("### CacheSize: Second = ${bufferedReader.readLine()}")
+        println("Module1#CacheSize: Second = ${bufferedReader.readLine()}")
     }
 
     @Test
@@ -74,6 +75,46 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("### CacheSize: Third = ${bufferedReader.readLine()}")
+        println("Module1#CacheSize: Third = ${bufferedReader.readLine()}")
+    }
+
+    @Test
+    fun test4() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("com.example.cicddemoapp", appContext.packageName)
+
+        val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
+        process.waitFor()
+        val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+        println("Module 2nd#CacheSize: First2nd = ${bufferedReader.readLine()}")
+    }
+
+    @Test
+    fun test5() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("com.example.cicddemoapp", appContext.packageName)
+
+        onView(withId(R.id.button)).check(matches(isDisplayed())).perform(click())
+        val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
+        process.waitFor()
+        val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+        println("Module 2nd#CacheSize: Second2nd = ${bufferedReader.readLine()}")
+    }
+
+    @Test
+    fun test6() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("com.example.cicddemoapp", appContext.packageName)
+
+        onView(withText("Hello World!")).check(matches(isDisplayed()))
+        onView(withId(R.id.button)).check(matches(isDisplayed())).perform(click())
+        onView(withText(R.string.text_changed_on_click)).check(matches(isDisplayed()))
+        val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
+        process.waitFor()
+        val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+        println("Module 2nd#CacheSize: Third2nd = ${bufferedReader.readLine()}")
     }
 }
