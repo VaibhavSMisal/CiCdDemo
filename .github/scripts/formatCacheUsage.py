@@ -21,7 +21,7 @@ def generate_cache_usage_html():
             key = key_value_pair[0].split(":")[-1].strip()
             value = key_value_pair[1].split()[0].strip()
 
-            html += f"<tr><td>{key}</td><td>{value}</td></tr>"
+            html += f"<tr><td>{key}</td><td>{value}B</td></tr>"
     
     html += "</table></details></details></body></html>"
 
