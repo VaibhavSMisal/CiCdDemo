@@ -13,7 +13,7 @@ def generate_cache_usage_html():
                 if current_module != None:
                     html += "</table></details>"
                 current_module = module
-                html += f"<details><summary><h3 style=\"display:inline;\">{current_module}</h3></summary>"
+                html += f"<details><summary style=\"padding: 16px;\"><h3 style=\"display:inline;\">{current_module}</h3></summary>"
                 html += "<table><tr><th>Action in test-app</th><th>Cache usage</th></tr>"
             # Split the line by "=" to separate key and value
             key_value_pair = line.split("=")
