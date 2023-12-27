@@ -1,5 +1,6 @@
 import sys
 def generate_cache_usage_html():
+    html = "<html>"
     html += "<body><h1>Performance Profiling</h1><details><summary><h2 style=\"display:inline;\">Cache Memory Usage</h2></summary>"
     current_module = None
     
@@ -22,7 +23,7 @@ def generate_cache_usage_html():
 
             html += f"<tr><td>{key}</td><td>{value}</td></tr>"
     
-    html += "</table></details></body></html>"
+    html += "</table></details></details></body></html>"
 
     print(f"HTML = {html}")
 
