@@ -33,6 +33,7 @@ logFile = open(sys.argv[1], "r")
 table_data = logFile.read().strip()
 logFile.close()
 table_list = table_data.split('\n')
+print(f"Table lines = \n{table_list}")
 
 generate_cache_usage_html()
 
