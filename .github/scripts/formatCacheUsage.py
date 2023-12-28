@@ -1,7 +1,7 @@
 import sys
 def generate_cache_usage_html():
     html = "<html>"
-    html += "<body><h1>Performance Profiling</h1><details><summary><h2 style=\"display:inline;\">Cache Memory Usage</h2></summary>"
+    html += "<body><h1>Performance Profiling</h1><details><summary><h2 style=\"display:inline;\">Cache Memory Usage</h2></summary><ul>"
     current_module = None
     
     for line in table_list:
@@ -11,9 +11,9 @@ def generate_cache_usage_html():
             # If the module changes, print it and the header
             if current_module != module:
                 if current_module != None:
-                    html += "</table></details>"
+                    html += "</table></details></li>"
                 current_module = module
-                html += f"<details style=\"padding:16px;\"><summary><h3 style=\"display:inline;\">{current_module}</h3></summary>"
+                html += f"<li><details><summary><h3 style=\"display:inline;\">{current_module}</h3></summary>"
                 html += "<table><tr><th>Action in test-app</th><th>Cache usage</th></tr>"
             # Split the line by "=" to separate key and value
             key_value_pair = line.split(",")
@@ -23,7 +23,7 @@ def generate_cache_usage_html():
 
             html += f"<tr><td>{key}</td><td>{value[0:-1]} KB</td></tr>"
     
-    html += "</table></details></details></body></html>"
+    html += "</table></details></li></ul></details></body></html>"
 
     print(f"HTML = {html}")
 
