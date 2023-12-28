@@ -10,8 +10,6 @@ def generate_cache_usage_html():
             module = line.split("#")[0].split(":")[-1]
             # If the module changes, print it and the header
             if current_module != module:
-                if current_module != None:
-                    html += "</table></details></li>"
                 current_module = module
                 html += f"<li><details><summary><h3 style=\"display:inline;\">{current_module}</h3></summary>"
                 html += "<table><tr><th>Action in test-app</th><th>Cache usage</th></tr>"
