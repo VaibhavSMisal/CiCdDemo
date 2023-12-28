@@ -7,19 +7,19 @@ def generate_cache_usage_html():
     for line in table_list:
         if "CacheSize:" in line:
             # Extract module name from the line
-            module = line.split("#")[0].split(":")[-1].strip()
+            module = line.split("#")[0].split(":")[-1]
             # If the module changes, print it and the header
             if current_module != module:
                 if current_module != None:
                     html += "</table></details>"
                 current_module = module
-                html += f"<details><summary style=\"padding: 16px;\"><h3 style=\"display:inline;\">{current_module}</h3></summary>"
+                html += f"<details style=\"padding:16px;\"><summary><h3 style=\"display:inline;\">{current_module}</h3></summary>"
                 html += "<table><tr><th>Action in test-app</th><th>Cache usage</th></tr>"
             # Split the line by "=" to separate key and value
-            key_value_pair = line.split("=")
+            key_value_pair = line.split(",")
             # Extract key and value
-            key = key_value_pair[0].split(":")[-1].strip()
-            value = key_value_pair[1].split()[0].strip()
+            key = key_value_pair[0].split(":")[-1]
+            value = key_value_pair[1].split()[0]
 
             html += f"<tr><td>{key}</td><td>{value[0:-1]} KB</td></tr>"
     
