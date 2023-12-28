@@ -47,7 +47,7 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("Module1#CacheSize: First = ${bufferedReader.readLine()}")
+        println("Module1#CacheSize:First,${bufferedReader.readLine()}")
     }
 
     @Test
@@ -60,7 +60,7 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("Module1#CacheSize: Second = ${bufferedReader.readLine()}")
+        println("Module1#CacheSize:Second,${bufferedReader.readLine()}")
     }
 
     @Test
@@ -75,7 +75,7 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("Module1#CacheSize: Third = ${bufferedReader.readLine()}")
+        println("Module1#CacheSize:Third,${bufferedReader.readLine()}")
     }
 
     @Test
@@ -87,7 +87,7 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("Module 2nd#CacheSize: First2nd = ${bufferedReader.readLine()}")
+        println("Module 2nd#CacheSize:First2nd,${bufferedReader.readLine()}")
     }
 
     @Test
@@ -100,7 +100,7 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("Module 2nd#CacheSize: Second2nd = ${bufferedReader.readLine()}")
+        println("Module 2nd#CacheSize:Second2nd,${bufferedReader.readLine()}")
     }
 
     @Test
@@ -115,6 +115,6 @@ class ExampleInstrumentedTest {
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
         val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-        println("Module 2nd#CacheSize: Third2nd = ${bufferedReader.readLine()}")
+        println("Module 2nd#CacheSize:Third2nd,${bufferedReader.readLine()}")
     }
 }
