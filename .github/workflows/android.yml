@@ -35,7 +35,7 @@ jobs:
             adb devices
             touch app/emulator.log
             chmod 777 app/emulator.log
-            ./gradlew :app:connectedCheck Pandroid.testInstrumentationRunnerArguments.package=com.example.cicddemoapp
+            ./gradlew :app:connectedCheck -Pandroid.testInstrumentationRunnerArguments.package=com.example.cicddemoapp
             adb logcat -d | grep "CacheSize:" >> app/emulator.log &
 
       - name: Upload logs
