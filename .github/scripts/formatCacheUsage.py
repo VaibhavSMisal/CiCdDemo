@@ -4,7 +4,7 @@ def generate_cache_usage_html():
     html += "<body><h1 style='padding:0px; margin-top:0px; margin-bottom:0px;'>Performance Profiling</h1><details style='padding:0px; margin-top:0px; margin-bottom:0px;'><summary style='padding:0px; margin-top:0px; margin-bottom:0px;'>" \
             "<h3 style='display:inline; padding:0px; margin-top:0px; margin-bottom:0px;'>Cache Memory Usage</h3></summary><ul>"
     current_module = table_list[0].split("#")[0].split(":")[-1]
-    html += f"<li><details><summary style='padding:0px; margin-top:0px; margin-bottom:0px;'><h3 style='display:inline; padding:0px; margin-top:0px; margin-bottom:0px;'>{current_module}</h3></summary>" \
+    html += f"<li><details><summary style='padding:0px; margin-top:0px; margin-bottom:0px;'><h4 style='display:inline; padding:0px; margin-top:0px; margin-bottom:0px;'>{current_module}</h4></summary>" \
             "<table><tr><th>Action in test-app</th><th>Cache usage</th></tr>"
     
     for line in table_list:
