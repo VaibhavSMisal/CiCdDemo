@@ -70,7 +70,9 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const cacheLogsFileContent = fs.readFileSync('cache_usage_report.html', 'utf8')
+            const cacheLogsFileContent1 = fs.readFileSync('cache_usage_report.html', 'utf8')
+            const cacheLogsFileContent2 = fs.readFileSync('cache_usage_report.html', 'utf8')
+            const cacheLogsFileContent = cacheLogsFileContent1 + "\n" + cacheLogsFileContent2
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
