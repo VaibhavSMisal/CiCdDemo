@@ -73,7 +73,7 @@ jobs:
 
       - name: Running anything
         id: output_step
-        run: echo "test=File log" >> "$GITHUB_OUTPUT"
+        run: echo "test=FileLog" >> "$GITHUB_OUTPUT"
           
   cache_usage_display:
     needs: [cache_usage_calculate, file_log]
