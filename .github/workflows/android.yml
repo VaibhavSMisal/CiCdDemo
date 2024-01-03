@@ -8,6 +8,7 @@ on:
 
 env:
   cache_usage_report_file: cache_usage_report.html
+  file_log_report_file: file_report.html
   
 jobs:
   cache_usage_calculate:
@@ -43,27 +44,55 @@ jobs:
         with:
           name: cache_logs
           path: app/emulator.log
-          
-      - name : Run python script
-        id: python_script
-        run : |
-          chmod +x ./.github/scripts/formatCacheUsage.py
-          python3 ./.github/scripts/formatCacheUsage.py app/emulator.log
-     
-      - name: Upload html file
-        uses: actions/upload-artifact@v2
+
+  file_log:
+    name: File log
+    runs-on: macos-latest
+
+    outputs:
+      output1: ${{ steps.output_step.outputs.test }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
         with:
-          name: ${{ env.cache_usage_report_file }}
-          path: ${{ env.cache_usage_report_file }}
+          java-version: 17
+          distribution: 'zulu'
+          cache: 'gradle'
+
+      - name: Running anything
+        id: output_step
+        run: echo "test=File log" >> "$GITHUB_OUTPUT"
           
   cache_usage_display:
-    needs: cache_usage_calculate
+    needs: [cache_usage_calculate, file_log]
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/download-artifact@v3
         with:
-          name: ${{ env.cache_usage_report_file }}
+          name: cache_logs
+          
+      - name : Run python script
+        id: python_script
+        run : |
+          chmod +x ./.github/scripts/formatCacheUsage.py
+          python3 ./.github/scripts/formatCacheUsage.py app/emulator.log ${{ needs.file_log.outputs.output1 }}
+     
+      # - name: Upload html file
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ${{ env.cache_usage_report_file }}
+      #     path: ${{ env.cache_usage_report_file }}
+
+      # - name: Upload html file
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: ${{ env.file_log_report_file }}
+      #     path: ${{ env.file_log_report_file }}
 
       - name: Add PR comment
         uses: actions/github-script@v7
@@ -71,7 +100,7 @@ jobs:
           script: |
             const fs = require('fs')
             const cacheLogsFileContent1 = fs.readFileSync('cache_usage_report.html', 'utf8')
-            const cacheLogsFileContent2 = fs.readFileSync('cache_usage_report.html', 'utf8')
+            const cacheLogsFileContent2 = fs.readFileSync('file_report.html', 'utf8')
             const cacheLogsFileContent = cacheLogsFileContent1 + "\n" + cacheLogsFileContent2
             github.rest.issues.createComment({
               issue_number: context.issue.number,
