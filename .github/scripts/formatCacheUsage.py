@@ -23,11 +23,24 @@ def generate_cache_usage_html():
     with open("cache_usage_report.html", "w") as file:
         file.write(html)
 
+def generate_cache_usage_html_duplicate():
+    html = "<html>"
+    html += "<body><h1>Performance Profiling Duplicate</h1><details><summary><h3 style=\"display:inline; padding:5px;\">Cache Memory Usage</h3></summary><ul>"
+    html += f"<li><details><summary><h3 style=\"display:inline; padding:10px;\">{fileLog}</h3></summary>" \
+            "<table><tr><th>Action in test-app</th><th>Cache usage</th></tr>"
+    html += "</table></details></li></ul></details></body></html>"
+
+    print(html)
+    
+    with open("file_report.html", "w") as file:
+        file.write(html)
+
 logFile = open(sys.argv[1], "r")
 table_data = logFile.read().strip()
 logFile.close()
 table_list = table_data.split('\n')
-print(f"Table lines = \n{table_list}")
+
+fileLog = sys.argv[2]
 
 generate_cache_usage_html()
-
+generate_cache_usage_html_duplicate()
