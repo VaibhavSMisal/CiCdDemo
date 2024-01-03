@@ -91,7 +91,7 @@ jobs:
         id: python_script
         run : |
           chmod +x ./.github/scripts/formatCacheUsage.py
-          python3 ./.github/scripts/formatCacheUsage.py app/emulator.log ${{ needs.file_log.outputs.output1 }}
+          python3 ./.github/scripts/formatCacheUsage.py emulator.log ${{ needs.file_log.outputs.output1 }}
      
       # - name: Upload html file
       #   uses: actions/upload-artifact@v2
