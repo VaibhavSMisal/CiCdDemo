@@ -11,6 +11,7 @@ env:
   
 jobs:
   cache_usage_calculate:
+    name: Cache/Temp memory usage
     runs-on: macos-latest
 
     steps:
