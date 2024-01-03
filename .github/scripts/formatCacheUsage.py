@@ -1,7 +1,7 @@
 import sys
 def generate_cache_usage_html():
     html = "<html>"
-    html += "<body><h1>Performance Profiling</h1><details><summary><h2 style=\"display:inline;\">Cache Memory Usage</h2></summary><ul>"
+    html += "<body><h1>Performance Profiling</h1><details><summary><h3 style=\"display:inline;\">Cache Memory Usage</h3></summary><ul>"
     current_module = table_list[0].split("#")[0].split(":")[-1]
     html += f"<li><details><summary><h3 style=\"display:inline;\">{current_module}</h3></summary>" \
             "<table><tr><th>Action in test-app</th><th>Cache usage</th></tr>"
