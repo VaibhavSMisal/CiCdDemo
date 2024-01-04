@@ -1,0 +1,91 @@
+name: Extract Values
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  extract_values:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Store logs in file
+      run: echo "17:36:48.943 20694 20712 I System.out: Core#CacheSize:AuthenticationServiceInitialization,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:52.268 20694 20712 I System.out: Core#CacheSize:PutNonPrimitiveTypeValuesInstore,256K  /data/data/com.linkedin.audiencenetwork. testapp/cache
+17:36:54.260 20694 20712 I System.out: Core#CacheSize:PutPrimitiveTypeValuesInStore,264K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:56.004 20694 20712 I System.out: Core#CacheSize:GetPrimitiveTypeValuesFromStore,264K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:58.072 20694 20712 I System.out: Core#cacheSize:RevokeAccessToken,256K /data/data/com.linkedin,audiencenetwork. testapp/cache
+17:37:01.007 20694 20712 I System.out: Core#CacheSize:CheckValuesExistInStore, 264K  /data/data/com, linkedin.audiencenetwork. testapp/cache
+17:37:03.115 20694 20712 I System.out: Core#CacheSize:RemoveValuesFromstore,264K /data/data/com.linkedin.audiencenetwork, testapp/cache
+17:37:04.718 20694 20712 I System.out: Core#CacheSize:FetchAccessToken,264K
+17:37:30.631 20694 20712 I System.out: GroupMatching#CacheSize:InvalidateGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:32.064 20694 20712 I System.out: GroupMatching#CacheSize:FetchGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cachc
+17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:38,300 21034 21052 I System.out: Core#CacheSize:AuthenticationServiceInitialization,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:40.095 21034 21052 I System.out: Core#CacheSize:PutNonPrimitiveTypeValuesInStore,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:42.937 21034 21052 I System.out: Core#CacheSize:PutPrimitiveTypeValuesInStore,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:44.637 21034 21052 I System.out: Core#CacheSize:GetPrimitiveTypeValuesFromStore,264K
+17:37:46.553 21034 21052 I System.out: Core#CacheSize:RevokeAccessToken,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:49.568 21034 21052 I System.out: Core#CacheSize:CheckValuesExistInStore,264K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:51.615 21034 21052 I System.out: Core#CacheSize:RemoveValuesFromStore,264K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:53.426 21034 21052 I Systen.out: Core#CacheSize:FetchAccessToken,264K  /data/data/com.linkedin.audiencenetwork. testapp/cache
+17:38:19.548 21034 21052 I System.out: GroupMatching#Cachesize:InvalidateGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cach
+17:38:21.108 21034 21052 I System.out: GroupMatching#CacheSize:FetchGroupId,256K  /data/data/com, linkedin.audiencenetwork. testapp/cache
+17:38:22.598 21034 21052 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork. testapp/cache
+17:38:27.564 21374 21392 I System.out: Core#Cachesize:AuthenticationServiceInitialization,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:38:29.513 21374 21392 I System.out: Core#CacheSize:PutNonPrimitiveTypeValuesInStore,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:38:32.383 21374 21392 I System.out: Core#CacheSize:PutPrimitiveTypeValuesInStore,264K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:38:34.115 21374 21392 I System.out: Core#CacheSize:GetPrimitiveTypeValuesFromStore,264K  /data/data/com.linkedin.audiencenetwork. testapp/cache
+17:38:36.047 21374 21392 I System.out: Core#CacheSize:RevokeAccessToken,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:38:39.107 21374 21392 I System.out: Core#CacheSize:CheckValuesExistInStore,264K  /data/data/com.linkedin.audiencenetwork. testapp/cache
+17:38:41.426 21374 21392 I System.out: Core#CacheSize:RemoveValuesfromstore,264K /data/data/com, linkedin.audiencenetwork, testapp/cache
+17:38:43.169 21374 21392 I System.out: Core#Cachesize: FetchAccessToken,264K  /data/data/com,linkedin. audiencenetwork, testapp/cache
+17:37:30.631 20694 20712 I System.out: GroupMatching#CacheSize:InvalidateGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:32.064 20694 20712 I System.out: GroupMatching#CacheSize:FetchGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cachc
+17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:48.943 20694 20712 I System.out: Core#CacheSize:AuthenticationServiceInitialization,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:52.268 20694 20712 I System.out: Core#CacheSize:PutNonPrimitiveTypeValuesInstore,256K  /data/data/com.linkedin.audiencenetwork. testapp/cache
+17:36:54.260 20694 20712 I System.out: Core#CacheSize:PutPrimitiveTypeValuesInStore,264K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:56.004 20694 20712 I System.out: Core#CacheSize:GetPrimitiveTypeValuesFromStore,264K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:58.072 20694 20712 I System.out: Core#cacheSize:RevokeAccessToken,256K /data/data/com.linkedin,audiencenetwork. testapp/cache
+17:37:01.007 20694 20712 I System.out: Core#CacheSize:CheckValuesExistInStore, 264K  /data/data/com, linkedin.audiencenetwork. testapp/cache
+17:37:03.115 20694 20712 I System.out: Core#CacheSize:RemoveValuesFromstore,264K /data/data/com.linkedin.audiencenetwork, testapp/cache
+17:37:04.718 20694 20712 I System.out: Core#CacheSize:FetchAccessToken,264K
+17:37:30.631 20694 20712 I System.out: GroupMatching#CacheSize:InvalidateGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:32.064 20694 20712 I System.out: GroupMatching#CacheSize:FetchGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cachc
+17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:48.943 20694 20712 I System.out: Core#CacheSize:AuthenticationServiceInitialization,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:52.268 20694 20712 I System.out: Core#CacheSize:PutNonPrimitiveTypeValuesInstore,256K  /data/data/com.linkedin.audiencenetwork. testapp/cache
+17:36:54.260 20694 20712 I System.out: Core#CacheSize:PutPrimitiveTypeValuesInStore,264K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:56.004 20694 20712 I System.out: Core#CacheSize:GetPrimitiveTypeValuesFromStore,264K  /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:36:58.072 20694 20712 I System.out: Core#cacheSize:RevokeAccessToken,256K /data/data/com.linkedin,audiencenetwork. testapp/cache
+17:37:01.007 20694 20712 I System.out: Core#CacheSize:CheckValuesExistInStore, 264K  /data/data/com, linkedin.audiencenetwork. testapp/cache
+17:37:03.115 20694 20712 I System.out: Core#CacheSize:RemoveValuesFromstore,264K /data/data/com.linkedin.audiencenetwork, testapp/cache
+17:37:04.718 20694 20712 I System.out: Core#CacheSize:FetchAccessToken,264K
+17:37:30.631 20694 20712 I System.out: GroupMatching#CacheSize:InvalidateGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
+17:37:32.064 20694 20712 I System.out: GroupMatching#CacheSize:FetchGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cachc
+17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache" >> app/secongEmulator.log
+
+    - name: Run Script
+      run: |
+        # Inline the script
+        input_file="app/secongEmulator.log"
+        filtered_lines=$(grep -E 'CacheSize:(.*),[0-9]+K' "$input_file")
+        
+        while IFS= read -r line; do
+            core=$(echo "$line" | awk -F'#' '{print $1}')
+            operation=$(echo "$line" | awk -F'#CacheSize:' '{print $2}' | awk -F',' '{print $1}')
+            size=$(echo "$line" | awk '{print $NF}')
+            
+            echo "$core,$operation,$size"
+        done <<< "$filtered_lines" > extracted_values.csv
+
+    - name: Upload Extracted Values
+      uses: actions/upload-artifact@v2
+      with:
+        name: extracted-values
+        path: extracted_values.csv
