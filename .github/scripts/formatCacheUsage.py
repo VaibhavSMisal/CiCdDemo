@@ -1,23 +1,21 @@
 import sys
-# import js2py
 
-# js = """
-# var coll = document.getElementsByClassName("collapsible");
-# var i;
+script_for_buttons = """
+var coll = document.getElementsByClassName("collapsible");
+var i;
 
-# for (i = 0; i < coll.length; i++) {
-#   coll[i].addEventListener("click", function() {
-#     this.classList.toggle("active");
-#     var content = this.nextElementSibling;
-#     if (content.style.display === "block") {
-#       content.style.display = "none";
-#     } else {
-#       content.style.display = "block";
-#     }
-#   });
-# }
-# """.replace("document.write", "return ")
-# result = js2py.eval_js(js)
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+"""
 
 style = """
 .collapsible {
@@ -61,7 +59,7 @@ def generate_cache_usage_html():
 
             html += f"<tr><td>{key}</td><td>{value[0:-1]} KB</td></tr>"
     
-    html += f"</table></div></div></body></html>"
+    html += f"</table></div></div><script>{script_for_buttons}</script></body></html>"
 
     print(f"HTML = {html}")
 
