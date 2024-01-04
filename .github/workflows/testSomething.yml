@@ -84,7 +84,7 @@ jobs:
       run: |
         # Inline the script
         # input_file="app/secondEmulator.txt"
-        cat app/secondEmulator.txt | awk -F'[:, ]+' '/Core#CacheSize/ || /GroupMatching#CacheSize/ {print $(NF-2), $(NF-1), $NF}' > extracted_values.txt
+        awk -F'[:, ]+' '/#CacheSize/ {gsub(/^[0-9]+:[0-9]+:[0-9]+ [0-9]+ [0-9]+ [A-Z]+ [a-zA-Z]+: |\/data\/data\/com.linkedin.audiencenetwork.testapp\/cache/, ""); print $4","$5","$6}' app/secondEmulator.txt > extracted_values.txt
         
         # # Use grep to filter lines containing the desired pattern
         # filtered_lines=$(grep -E 'CacheSize:(.*),[0-9]+K' "$input_file" | tr -d '[:space:]')
