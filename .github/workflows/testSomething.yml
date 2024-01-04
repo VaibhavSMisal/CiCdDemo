@@ -80,22 +80,22 @@ jobs:
         name: logFile
         path: app/secondEmulator.log
         
-    # - name: Run Script
-    #   run: |
-    #     # Inline the script
-    #     input_file="app/secondEmulator.log"
-    #     filtered_lines=$(grep -E 'CacheSize:(.*),[0-9]+K' "$input_file")
+    - name: Run Script
+      run: |
+        # Inline the script
+        input_file="app/secondEmulator.log"
+        filtered_lines=$(grep -E 'CacheSize:(.*),[0-9]+K' "$input_file")
         
-    #     while IFS= read -r line; do
-    #         core=$(echo "$line" | awk -F'#' '{print $1}')
-    #         operation=$(echo "$line" | awk -F'#CacheSize:' '{print $2}' | awk -F',' '{print $1}')
-    #         size=$(echo "$line" | awk '{print $NF}')
+        while IFS= read -r line; do
+            core=$(echo "$line" | awk -F'#' '{print $1}')
+            operation=$(echo "$line" | awk -F'#CacheSize:' '{print $2}' | awk -F',' '{print $1}')
+            size=$(echo "$line" | awk '{print $NF}')
             
-    #         echo "$core,$operation,$size"
-    #     done <<< "$filtered_lines" > extracted_values.csv
+            echo "$core,$operation,$size"
+        done <<< "$filtered_lines" > extracted_values.csv
 
-    # - name: Upload Extracted Values
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: extracted-values
-    #     path: extracted_values.csv
+    - name: Upload Extracted Values
+      uses: actions/upload-artifact@v2
+      with:
+        name: extracted-values
+        path: extracted_values.csv
