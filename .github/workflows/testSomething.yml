@@ -2,8 +2,9 @@ name: Extract Values
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   extract_values:
