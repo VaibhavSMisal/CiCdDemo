@@ -16,8 +16,8 @@ jobs:
 
     - name: Store logs in file
       run: |
-        touch app/secondEmulator.log
-        chmod 777 app/secondEmulator.log
+        touch app/secondEmulator.txt
+        chmod 777 app/secondEmulator.txt
         echo "17:36:48.943 20694 20712 I System.out: Core#CacheSize:AuthenticationServiceInitialization,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
         17:36:52.268 20694 20712 I System.out: Core#CacheSize:PutNonPrimitiveTypeValuesInstore,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache
         17:36:54.260 20694 20712 I System.out: Core#CacheSize:PutPrimitiveTypeValuesInStore,264K /data/data/com.linkedin.audiencenetwork.testapp/cache
@@ -72,31 +72,33 @@ jobs:
         17:37:04.718 20694 20712 I System.out: Core#CacheSize:FetchAccessToken,264K  /data/data/com.linkedin.audiencenetwork.testapp/cache
         17:37:30.631 20694 20712 I System.out: GroupMatching#CacheSize:InvalidateGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
         17:37:32.064 20694 20712 I System.out: GroupMatching#CacheSize:FetchGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
-        17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache" >> app/secondEmulator.log &
+        17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache" >> app/secondEmulator.txt &
 
     - name: Upload log file
       uses: actions/upload-artifact@v2
       with:
         name: logFile
-        path: app/secondEmulator.log
+        path: app/secondEmulator.txt
         
     - name: Run Script
       run: |
         # Inline the script
-        input_file="app/secondEmulator.log"
-        # Use grep to filter lines containing the desired pattern
-        filtered_lines=$(grep -E 'CacheSize:(.*),[0-9]+K' "$input_file" | tr -d '[:space:]')
+        input_file="app/secondEmulator.txt"
+        awk -F'#CacheSize:|,' '/CacheSize/{print $1","$2","$3}' "$input_file" > extracted_values.txt
+        
+        # # Use grep to filter lines containing the desired pattern
+        # filtered_lines=$(grep -E 'CacheSize:(.*),[0-9]+K' "$input_file" | tr -d '[:space:]')
 
-        # Loop through the filtered lines and extract the required values
-        while IFS= read -r line; do
-            # Use awk to extract the specific values
-            core=$(echo "$line" | awk -F'#' '{print $1}')
-            operation=$(echo "$line" | awk -F'#CacheSize:' '{print $2}' | awk -F',' '{print $1}')
-            size=$(echo "$line" | awk '{print $NF}')
+        # # Loop through the filtered lines and extract the required values
+        # while IFS= read -r line; do
+        #     # Use awk to extract the specific values
+        #     core=$(echo "$line" | awk -F'#' '{print $1}')
+        #     operation=$(echo "$line" | awk -F'#CacheSize:' '{print $2}' | awk -F',' '{print $1}')
+        #     size=$(echo "$line" | awk '{print $NF}')
 
-            # Print the extracted values
-            echo "$core,$operation,$size" >> extracted_values.txt
-        done <<< "$filtered_lines"
+        #     # Print the extracted values
+        #     echo "$core,$operation,$size" >> extracted_values.txt
+        # done <<< "$filtered_lines"
 
     - name: Display Extracted Values
       run: cat extracted_values.txt
