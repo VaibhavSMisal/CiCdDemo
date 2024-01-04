@@ -84,18 +84,25 @@ jobs:
       run: |
         # Inline the script
         input_file="app/secondEmulator.log"
-        filtered_lines=$(grep -E 'CacheSize:(.*),[0-9]+K' "$input_file")
-        
+        # Use grep to filter lines containing the desired pattern
+        filtered_lines=$(grep -E 'CacheSize:(.*),[0-9]+K' "$input_file" | tr -d '[:space:]')
+
+        # Loop through the filtered lines and extract the required values
         while IFS= read -r line; do
+            # Use awk to extract the specific values
             core=$(echo "$line" | awk -F'#' '{print $1}')
             operation=$(echo "$line" | awk -F'#CacheSize:' '{print $2}' | awk -F',' '{print $1}')
             size=$(echo "$line" | awk '{print $NF}')
-            
-            echo "$core,$operation,$size"
-        done <<< "$filtered_lines" > extracted_values.csv
 
+            # Print the extracted values
+            echo "$core,$operation,$size" >> extracted_values.txt
+        done <<< "$filtered_lines"
+
+    - name: Display Extracted Values
+      run: cat extracted_values.txt
+      
     - name: Upload Extracted Values
       uses: actions/upload-artifact@v2
       with:
         name: extracted-values
-        path: extracted_values.csv
+        path: extracted_values.txt
