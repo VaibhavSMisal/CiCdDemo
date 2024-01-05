@@ -29,20 +29,19 @@ def calculate90thPercentileBeforeProcessing():
     
 def generate_cache_usage_html():
     html = "<html>"
-    html += "<body><h1>Performance Profiling</h1><details><summary><h3 style=\"display:inline; padding:5px;\">Cache Memory Usage</h3></summary><ul>"
-    current_module = table_list[0].split("#")[0].split(":")[-1]
-    html += f"<li><details><summary><h3 style=\"display:inline; padding:10px;\">{current_module}</h3></summary>" \
+    html += "<body><h1>Performance Profiling Report</h1><details><summary><h2>Cache Memory Usage</h2></summary><ul>"
+    current_module = table_list[0].split(",")[0]
+    html += f"<li><details><summary><b>{current_module}</b></summary>" \
             "<table><tr><th>Action in test-app</th><th>Cache usage</th></tr>"
 
     for line in table_list:
-        if "CacheSize:" in line:
-            # Split the line by "," to separate key and value
-            key_value_pair = line.split(",")
-            # Extract key and value
-            key = key_value_pair[0].split(":")[-1]
-            value = key_value_pair[1].split()[0]
+        # Split the line by "," to separate key and value
+        key_value_pair = line.split(",")
+        # Extract key and value
+        key = key_value_pair[1]
+        value = key_value_pair[2]
 
-            html += f"<tr><td>{key}</td><td>{value[0:-1]} KB</td></tr>"
+        html += f"<tr><td>{key}</td><td>{value[0:-1]} KB</td></tr>"
 
     html += "</table></details></li></ul></details></body></html>"
 
