@@ -72,10 +72,13 @@ jobs:
         17:37:04.718 20694 20712 I System.out: Core#CacheSize:FetchAccessToken,264K  /data/data/com.linkedin.audiencenetwork.testapp/cache
         17:37:30.631 20694 20712 I System.out: GroupMatching#CacheSize:InvalidateGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
         17:37:32.064 20694 20712 I System.out: GroupMatching#CacheSize:FetchGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
-        17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache" | awk -F'#|:|,|/' '/CacheSize/ { print $4 "," $6 "," $7 }' >> app/secondEmulator.txt &
+        17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache" | awk -F'#|:|,|/' '/CacheSize/ { sub(/^[ \t]+/, "", $4); print $4 "," $6 "," $7 }' >> app/secondEmulator.txt &
 
     - name: Upload log file
       uses: actions/upload-artifact@v2
       with:
         name: logFile
         path: app/secondEmulator.txt
+    
+    - name: Display Formatted logs
+      run: cat app/secondEmulator.txt
