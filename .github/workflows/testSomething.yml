@@ -80,5 +80,5 @@ jobs:
     - name : Run python script
       id: python_script
       run : |
-        chmod +x ./.github/scripts/formatCacheUsage.py
-        python3 ./.github/scripts/formatCacheUsage.py app/secondEmulator.txt
+        chmod +x ./.github/scripts/profilingScript.py
+        python3 ./.github/scripts/profilingScript.py app/secondEmulator.txt
