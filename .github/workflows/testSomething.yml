@@ -72,39 +72,10 @@ jobs:
         17:37:04.718 20694 20712 I System.out: Core#CacheSize:FetchAccessToken,264K  /data/data/com.linkedin.audiencenetwork.testapp/cache
         17:37:30.631 20694 20712 I System.out: GroupMatching#CacheSize:InvalidateGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
         17:37:32.064 20694 20712 I System.out: GroupMatching#CacheSize:FetchGroupId,256K /data/data/com.linkedin.audiencenetwork.testapp/cache
-        17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache" >> app/secondEmulator.txt &
+        17:37:33.523 20694 20712 I System.out: GroupMatching#CacheSize:GetGroupId,256K  /data/data/com.linkedin.audiencenetwork.testapp/cache" | awk -F'#|:|,|/' '/CacheSize/ { print $4 "," $6 "," $7 }' >> app/secondEmulator.txt &
 
     - name: Upload log file
       uses: actions/upload-artifact@v2
       with:
         name: logFile
         path: app/secondEmulator.txt
-        
-    - name: Run Script
-      run: |
-        # Inline the script
-        # input_file="app/secondEmulator.txt"
-        awk -F'[:, ]+' '/#CacheSize/ {gsub(/^[0-9]+:[0-9]+:[0-9]+ [0-9]+ [0-9]+ [A-Z]+ [a-zA-Z]+: |\/data\/data\/com.linkedin.audiencenetwork.testapp\/cache/, ""); print $4","$5","$6}' app/secondEmulator.txt > extracted_values.txt
-        
-        # # Use grep to filter lines containing the desired pattern
-        # filtered_lines=$(grep -E 'CacheSize:(.*),[0-9]+K' "$input_file" | tr -d '[:space:]')
-
-        # # Loop through the filtered lines and extract the required values
-        # while IFS= read -r line; do
-        #     # Use awk to extract the specific values
-        #     core=$(echo "$line" | awk -F'#' '{print $1}')
-        #     operation=$(echo "$line" | awk -F'#CacheSize:' '{print $2}' | awk -F',' '{print $1}')
-        #     size=$(echo "$line" | awk '{print $NF}')
-
-        #     # Print the extracted values
-        #     echo "$core,$operation,$size" >> extracted_values.txt
-        # done <<< "$filtered_lines"
-
-    - name: Display Extracted Values
-      run: cat extracted_values.txt
-      
-    - name: Upload Extracted Values
-      uses: actions/upload-artifact@v2
-      with:
-        name: extracted-values
-        path: extracted_values.txt
