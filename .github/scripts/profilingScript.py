@@ -4,18 +4,18 @@ def calculate90thPercentileBeforeProcessing():
     global table_data
     # Create a dictionary to store the sizes for each [Module Name], [Test Name]
     sizes_dict = {}
-    
+
     # Split the input data into lines
     lines = data.strip().split('\n')
-    
+
     # Iterate through each line
     for line in lines:
         # Split the line into [Module Name], [Test Name], [Size]
         module_name, test_name, size = line.split(',')
-    
+
         # Combine [Module Name] and [Test Name] as a key
         key = f"{module_name},{test_name}"
-    
+
         # Store the size in the dictionary
         if key not in sizes_dict:
             sizes_dict[key] = []
@@ -23,10 +23,9 @@ def calculate90thPercentileBeforeProcessing():
     # Calculate and print the custom 90th percentile for each key
     for key, value in sizes_dict.items():
         percentile_index = int(5 * (9/10)) - 1
+        print(key)
         percentile_90 = value[percentile_index]
-        print(f"{key}: {percentile_90}")
-        table_data += f"{key}: {percentile_90}"
-        print(f"Table data = {table_data}")
+        table_data += f"{key},{percentile_90.strip()} "
     
 def generate_cache_usage_html():
     html = "<html>"
@@ -58,6 +57,6 @@ logFile.close()
 table_data = ""
 calculate90thPercentileBeforeProcessing()
 print(f"final table data after processing = {table_data}")
-table_list = table_data.split('\n')
+table_list = table_data.strip().split(' ')
 print(f"Table list = {table_list}")
 #generate_cache_usage_html()
