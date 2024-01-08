@@ -26,7 +26,7 @@ jobs:
 
       - name : Print class package
         run: |
-          output=$(find ./test-app/src/androidTest/java/com/linkedin/audiencenetwork -type f -name '*.kt' | grep 'performanceprofiling' | awk -F'.kt|./test-app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
+          output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
 
       - name: Print var
         run: echo "$output"
