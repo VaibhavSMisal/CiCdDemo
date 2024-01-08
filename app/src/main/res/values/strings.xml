@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CiCdDemoApp</string>
+    <string name="click_here">Click here</string>
+    <string name="text_changed_on_click">Text changed on click</string>
 </resources>
