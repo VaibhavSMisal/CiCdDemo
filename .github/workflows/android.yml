@@ -34,29 +34,28 @@ jobs:
       #   run: echo "${{steps.fileNames.outputs.output}}"
     
 
-      # - name: Start emulator, Run tests, Display cache usage
-      #   uses: ReactiveCircus/android-emulator-runner@v2
-      #   with:
-      #     api-level: 31
-      #     target: google_apis
-      #     arch: x86_64
-      #     script: |
-      #       adb devices
-      #       touch app/emulator.log
-      #       chmod 777 app/emulator.log
-      #       # ./gradlew :app:installDebugAndroidTest
-      #       # adb shell am instrument -w -e class com.example.cicddemoapp.ExampleInstrumentedTest app.test/androidx.test.runner.AndroidJUnitRunner
-      #       # ./gradlew :app:connectedCheck --continue
-      #       # adb logcat -d | grep "CacheSize:"
-      #       output=$(find ./app/src -type f -name '*.kt' -exec grep -l '^package\s\+com\.[^.]\+\.cicddemoapp' {} \; | xargs -I {} realpath {} | sed 's|^'"$(realpath ./app/src/androidTest/java)"'/||; s|/|.|g; s/\.kt$//' | paste -sd "," -)
-      #       echo "$output"
-  #           adb logcat -d | grep "CacheSize:" >> app/emulator.log &
+      - name: Start emulator, Run tests, Display cache usage
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 31
+          target: google_apis
+          arch: x86_64
+          script: |
+            adb devices
+            touch app/emulator.log
+            chmod 777 app/emulator.log
+            # ./gradlew installDebug
+            # ./gradlew :app:installDebugAndroidTest
+            output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
+            # adb shell am instrument -w -e class com.example.cicddemoapp.ExampleInstrumentedTest app.test/androidx.test.runner.AndroidJUnitRunner
+            ./gradlew :app:connectedCheck -Pandroid.testInstrumentationRunnerArguments.class=$ouptut
+            adb logcat -d | grep "CacheSize:" >> app/emulator.log &
 
-  #     - name: Upload logs
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: cache_logs
-  #         path: app/emulator.log
+      - name: Upload logs
+        uses: actions/upload-artifact@v2
+        with:
+          name: cache_logs
+          path: app/emulator.log
           
   #     - name : Run python script
   #       id: python_script
