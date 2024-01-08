@@ -26,10 +26,10 @@ jobs:
 
       - name : Print class package
         run: |
-          output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
+          find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev
 
-      - name: Print var
-        run: echo "$output"
+      # - name: Print var
+      #   run: echo "$output"
     
 
       # - name: Start emulator, Run tests, Display cache usage
