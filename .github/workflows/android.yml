@@ -26,7 +26,7 @@ jobs:
 
       - name : Print class package
         run: |
-          find ./app/src -type f -name '*.kt' -exec grep -l '^package\s\+com\.[^.]\+\.cicddemoapp' {} \; | xargs -I {} bash -c 'echo "{}" | sed -E "s|^'"$(pwd)/app/src/androidTest/java"'||; s|/|.|g; s/\.kt$//"'
+          find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ','
 
       # - name: Start emulator, Run tests, Display cache usage
       #   uses: ReactiveCircus/android-emulator-runner@v2
