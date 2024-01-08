@@ -25,9 +25,11 @@ jobs:
           cache: 'gradle'
 
       - name : Save class package
-        run : output=$(find ./app/src -type f -name '*.kt' -exec grep -l '^package\s\+com\.[^.]\+\.cicddemoapp' {} \; | paste -sd "," -)
-        # | xargs -I {} realpath {} | sed 's|^'"$(realpath ./app/src/androidTest/java)"'/||; s|/|.|g; s/\.kt$//'
-      
+        run : output=$(find ./test-app/src -type f -name '*.kt' -exec grep -l '^package\s\+com\.linkedin\.audiencenetwork\.[^.]\+\.performanceprofiling' {} \; | \
+              xargs -I {} realpath {} 2>/dev/null | \
+              sed 's|^'"$(realpath ./test-app/src/androidTest/java)"'/||; s|/|.|g; s/\.kt$//' | \
+              paste -sd "," -)
+
       - name: Print output var 
         run: echo "$output"
 
