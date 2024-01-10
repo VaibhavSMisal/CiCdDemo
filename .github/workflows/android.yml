@@ -54,9 +54,7 @@ jobs:
             # done
             # adb shell am instrument -w -e class "${{steps.fileNames.outputs.output}}" app.test/androidx.test.runner.AndroidJUnitRunner
             # ./gradlew :app:connectedCheck -Pandroid.testInstrumentationRunnerArguments.class=$ouptut
-            adb shell am instrument -w -e class "$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | \
-            grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | \
-            rev | cut -c 2- | rev)" app.test/androidx.test.runner.AndroidJUnitRunner
+            adb shell am instrument -w -e class $(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev) app.test/androidx.test.runner.AndroidJUnitRunner
             adb logcat -d | grep "CacheSize:" 
             # >> app/emulator.log &
 
