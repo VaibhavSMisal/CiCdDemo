@@ -77,15 +77,19 @@ jobs:
     - name: Display Formatted logs
       run: cat app/secondEmulator.txt
 
+    - name: Formatted logs
+      run: echo "<html><body>" >> cache_usage_report.html
+
+
     - name : Run python script
       id: python_script
       run : |
         chmod +x ./.github/scripts/profilingScript.py
         python3 ./.github/scripts/profilingScript.py app/secondEmulator.txt
 
-    - name: Display Formatted logs
-      run: echo "Any message2762763" >> cache_usage_report.html
-
+    - name: Formatted logs
+      run: echo "</body></html>" >> cache_usage_report.html
+      
     - name: Add PR comment
       uses: actions/github-script@v7
       with:
