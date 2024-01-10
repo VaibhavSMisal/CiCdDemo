@@ -24,11 +24,12 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
-      - name : Print class package
-        id: fileNames
-        run: |
-          output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
-          echo $output
+      - name: Set Output Variable
+        id: set-output
+        run: echo "::set-output name=output::$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)"
+
+      - name: Use Output Variable
+        run: echo ${{ steps.set-output.outputs.output }}
 
       # - name: Print var
       #   run: echo "${{steps.fileNames.outputs.output}}"
@@ -44,14 +45,14 @@ jobs:
             adb devices
             touch app/emulator.log
             chmod 777 app/emulator.log
-            output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
+            # output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
             ./gradlew installDebug
             ./gradlew :app:installDebugAndroidTest
-            # Assuming $output contains the comma-separated class names
-            for class_name in $(echo "$output" | tr ',' ' '); do
-              adb shell am instrument -w -e class "$class_name" app.test/androidx.test.runner.AndroidJUnitRunner
-            done
-            # adb shell am instrument -w -e class "$output" app.test/androidx.test.runner.AndroidJUnitRunner
+            # # Assuming $output contains the comma-separated class names
+            # for class_name in $(echo "$output" | tr ',' ' '); do
+            #   adb shell am instrument -w -e class "$class_name" app.test/androidx.test.runner.AndroidJUnitRunner
+            # done
+            adb shell am instrument -w -e class ${{steps.fileNames.outputs.output}} app.test/androidx.test.runner.AndroidJUnitRunner
             # ./gradlew :app:connectedCheck -Pandroid.testInstrumentationRunnerArguments.class=$ouptut
             adb logcat -d | grep "CacheSize:" 
             # >> app/emulator.log &
