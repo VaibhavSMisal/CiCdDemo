@@ -28,8 +28,7 @@ def calculate90thPercentileBeforeProcessing():
         table_data += f"{key},{percentile_90.strip()} "
     
 def generate_cache_usage_html():
-    html = "<html>"
-    html += "<body><h1>Performance Profiling Report</h1><details><summary><h2>Cache Memory Usage</h2></summary><ul>"
+    html = "<details><summary><h2>Cache Memory Usage</h2></summary><ul>"
     current_module = table_list[0].split(",")[0]
     html += f"<li><details><summary><b>{current_module}</b></summary>" \
             "<table><tr><th>Action in test-app</th><th>Cache usage</th></tr>"
@@ -43,7 +42,7 @@ def generate_cache_usage_html():
 
         html += f"<tr><td>{key}</td><td>{value[0:-1]} KB</td></tr>"
 
-    html += "</table></details></li></ul></details></body></html>"
+    html += "</table></details></li></ul></details>"
 
     print(f"HTML = {html}")
 
