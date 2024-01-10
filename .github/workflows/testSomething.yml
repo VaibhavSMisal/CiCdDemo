@@ -78,7 +78,7 @@ jobs:
       run: cat app/secondEmulator.txt
 
     - name: Formatted logs
-      run: echo "<html><body>" >> cache_usage_report.html
+      run: echo "<html><body><h2>Performan jfnfkljbk</h2>" >> cache_usage_report.html
 
 
     - name : Run python script
