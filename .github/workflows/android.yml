@@ -24,12 +24,12 @@ jobs:
           distribution: 'adopt'
           cache: 'gradle'
 
-      - name: Set Output Variable
-        id: set-output
-        run: echo "::set-output name=output::$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)"
+      # - name: Set Output Variable
+      #   id: set-output
+      #   run: echo "::set-output name=output::$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)"
 
-      - name: Use Output Variable
-        run: echo ${{ steps.set-output.outputs.output }}
+      # - name: Use Output Variable
+      #   run: echo ${{ steps.set-output.outputs.output }}
 
       # - name: Print var
       #   run: echo "${{steps.fileNames.outputs.output}}"
@@ -52,8 +52,11 @@ jobs:
             # for class_name in $(echo "$output" | tr ',' ' '); do
             #   adb shell am instrument -w -e class "$class_name" app.test/androidx.test.runner.AndroidJUnitRunner
             # done
-            adb shell am instrument -w -e class "${{steps.fileNames.outputs.output}}" app.test/androidx.test.runner.AndroidJUnitRunner
+            # adb shell am instrument -w -e class "${{steps.fileNames.outputs.output}}" app.test/androidx.test.runner.AndroidJUnitRunner
             # ./gradlew :app:connectedCheck -Pandroid.testInstrumentationRunnerArguments.class=$ouptut
+            adb shell am instrument -w -e class "$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | \
+            grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | \
+            rev | cut -c 2- | rev)" app.test/androidx.test.runner.AndroidJUnitRunner
             adb logcat -d | grep "CacheSize:" 
             # >> app/emulator.log &
 
