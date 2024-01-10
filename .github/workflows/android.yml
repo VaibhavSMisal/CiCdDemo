@@ -52,7 +52,7 @@ jobs:
             # for class_name in $(echo "$output" | tr ',' ' '); do
             #   adb shell am instrument -w -e class "$class_name" app.test/androidx.test.runner.AndroidJUnitRunner
             # done
-            adb shell am instrument -w -e class ${{steps.fileNames.outputs.output}} app.test/androidx.test.runner.AndroidJUnitRunner
+            adb shell am instrument -w -e class "${{steps.fileNames.outputs.output}}" app.test/androidx.test.runner.AndroidJUnitRunner
             # ./gradlew :app:connectedCheck -Pandroid.testInstrumentationRunnerArguments.class=$ouptut
             adb logcat -d | grep "CacheSize:" 
             # >> app/emulator.log &
