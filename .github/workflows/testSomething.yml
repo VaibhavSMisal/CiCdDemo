@@ -84,7 +84,7 @@ jobs:
         python3 ./.github/scripts/profilingScript.py app/secondEmulator.txt
 
     - name: Display Formatted logs
-      run: cat "Any message2762763" >> cache_usage_report.html
+      run: echo "Any message2762763" >> cache_usage_report.html
 
     - name: Add PR comment
       uses: actions/github-script@v7
