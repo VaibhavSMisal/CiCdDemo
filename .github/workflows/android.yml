@@ -30,3 +30,6 @@ jobs:
 
     - name: Print head commit
       run: echo ${{ github.event.pull_request.head.sha }}
+
+    - name: Print PR number
+      run: echo ${{ github. event. number }}
