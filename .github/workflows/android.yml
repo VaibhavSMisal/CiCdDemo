@@ -29,7 +29,7 @@ jobs:
       run: |
         echo ${{ github.event.pull_request.base.sha }}
         output = ${{ github.event.pull_request.base.sha }}
-        echo $[output:0:7]
+        echo $[$output:0:7]
 
     - name: Print head commit
       run: echo ${{ github.event.pull_request.head.sha }}
