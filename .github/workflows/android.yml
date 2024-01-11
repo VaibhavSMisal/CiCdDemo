@@ -24,3 +24,9 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Print base commit
+      run: echo ${{ github.event.pull_request.base.sha }}
+
+    - name: Print head commit
+      run: echo ${{ github.event.pull_request.head.sha }}
