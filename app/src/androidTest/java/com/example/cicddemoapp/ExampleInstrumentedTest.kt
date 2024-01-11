@@ -1,5 +1,7 @@
 package com.example.cicddemoapp
 
+import android.app.Instrumentation
+import android.os.Bundle
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -25,7 +27,19 @@ class ExampleInstrumentedTest {
 
         val process = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
         process.waitFor()
-        val bufferedReader = BufferedReader(InputStreamreader(process.inputStream))
-        println("### Cache size = ${bufferedReader.readLine()}")
+        val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+        val s = bufferedReader.readLine()
+        println("### Cache size = $s")
+
+        println("### Clearing cache")
+        val clearProcess = Runtime.getRuntime().exec("pm clear com.example.cicddemoapp")
+        clearProcess.waitFor()
+        println("### Cleared cache")
+        
+        val processRerun = Runtime.getRuntime().exec("du -sh /data/data/com.example.cicddemoapp/cache")
+        processRerun.waitFor()
+        val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+        val s = bufferedReader.readLine()
+        println("### Cache size Rerun = $s")
     }
 }
