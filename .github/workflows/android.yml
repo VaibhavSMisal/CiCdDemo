@@ -47,8 +47,8 @@ jobs:
             chmod 777 app/emulator.log
             ./gradlew installDebug
             ./gradlew :app:installDebugAndroidTest
-            output = $(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
-            echo $output
+            output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
+            echo "$output"
             IFS=','
             read -ra class_names <<< "$output"
             for i in {1..2}; do 
