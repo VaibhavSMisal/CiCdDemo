@@ -53,7 +53,7 @@ jobs:
 
             IFS=',' read -ra class_names <<< "$output"
 
-            for i in {1..2}; do for className in "${class_names[@]}"; do adb shell am instrument -w -e class "$className" app.test/androidx.test.runner.AndroidJUnitRunner adb shell pm clear com.example.cicddemoapp done done
+            for i in {1..2}; do for className in "${class_names[@]}"; do adb shell am instrument -w -e class "$className" app.test/androidx.test.runner.AndroidJUnitRunner; adb shell pm clear com.example.cicddemoapp; done; done
             
             adb logcat -d | grep "CacheSize:"
             adb logcat -d | grep "CacheSize:" >> app/emulator.log &
