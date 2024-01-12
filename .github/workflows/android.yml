@@ -42,12 +42,13 @@ jobs:
           target: google_apis
           arch: x86_64
           script: |
+            set -x
             adb devices
             touch app/emulator.log
             chmod 777 app/emulator.log
             ./gradlew installDebug
             ./gradlew :app:installDebugAndroidTest
-
+            echo "hello"
             output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
             echo "$output"
 
@@ -55,7 +56,7 @@ jobs:
 
             for i in {1..2}; do for className in "${class_names[@]}"; do adb shell am instrument -w -e class "$className" app.test/androidx.test.runner.AndroidJUnitRunner; adb shell pm clear com.example.cicddemoapp; done; done
             
-            adb logcat -d | grep "CacheSize:"
+            # adb logcat -d | grep "CacheSize:"
             adb logcat -d | grep "CacheSize:" >> app/emulator.log &
 
       - name: Upload logs
