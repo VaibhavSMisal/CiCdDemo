@@ -45,18 +45,20 @@ jobs:
             adb devices
             touch app/emulator.log
             chmod 777 app/emulator.log
-            # output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
             ./gradlew installDebug
             ./gradlew :app:installDebugAndroidTest
-            # # Assuming $output contains the comma-separated class names
-            # for class_name in $(echo "$output" | tr ',' ' '); do
-            #   adb shell am instrument -w -e class "$class_name" app.test/androidx.test.runner.AndroidJUnitRunner
-            # done
-            # adb shell am instrument -w -e class "${{steps.fileNames.outputs.output}}" app.test/androidx.test.runner.AndroidJUnitRunner
-            # ./gradlew :app:connectedCheck -Pandroid.testInstrumentationRunnerArguments.class=$ouptut
-            for i in {1..2}; do adb shell am instrument -w -e class $(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev) app.test/androidx.test.runner.AndroidJUnitRunner; done
-            adb logcat -d | grep "CacheSize:" 
-            # >> app/emulator.log &
+            output = $(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
+            echo $output
+            IFS=','
+            read -ra class_names <<< "$output"
+            for i in {1..2}; do 
+              for className in "${class_names[@]}"; do
+                adb shell am instrument -w -e class "$className" app.test/androidx.test.runner.AndroidJUnitRunner
+                adb shell pm clear com.example.cicddemoapp
+              done
+            done
+            adb logcat -d | grep "CacheSize:"
+            adb logcat -d | grep "CacheSize:" >> app/emulator.log &
 
       - name: Upload logs
         uses: actions/upload-artifact@v2
