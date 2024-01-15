@@ -51,9 +51,9 @@ jobs:
             echo "hello"
             
             output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',')
-            echo $output
+            echo "$output"
             
-            readarray -t class_names <<< "$output"
+            IFS=',' read -ra class_names <<< "$output"
             
             echo "Class Names: ${class_names[@]}"
             
