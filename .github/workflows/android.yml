@@ -49,11 +49,11 @@ jobs:
             # ./gradlew installDebug
             # ./gradlew :app:installDebugAndroidTest
             echo "hello"
-            for (( a = 1; a <= 3; a++ )); do echo "Starting loop $a:" for (( b = 1; b <= 3; b++ )); do echo " Inside loop: $b"; done; done
-            
-            # output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',')
-            # echo "$output"
-            
+            # for (( a = 1; a <= 3; a++ )); do echo "Starting loop $a:" for (( b = 1; b <= 3; b++ )); do echo " Inside loop: $b"; done; done
+          
+            output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep 'cicddemoapp' | awk -F'.kt|./app/src/androidTest/java/' '{print $2}' | tr '/' '.' | tr '\n' ',' | rev | cut -c 2- | rev)
+            echo $output
+
             # IFS=',' read -ra class_names <<< "$output"
             
             # echo "Class Names: ${class_names[@]}"
@@ -73,7 +73,7 @@ jobs:
             # for i in {1..2}; do for className in "${class_names[@]}"; do adb shell am instrument -w -e class $className app.test/androidx.test.runner.AndroidJUnitRunner; adb shell pm clear com.example.cicddemoapp; done; done
             
             # adb logcat -d | grep "CacheSize:"
-            adb logcat -d | grep "CacheSize:" >> app/emulator.log &
+            # adb logcat -d | grep "CacheSize:" >> app/emulator.log &
 
       - name: Upload logs
         uses: actions/upload-artifact@v2
