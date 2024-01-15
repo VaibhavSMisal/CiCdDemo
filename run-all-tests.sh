@@ -6,8 +6,11 @@ echo $output
 # Iterate over class names
 IFS=',' read -r -a class_names <<< "$output"
 
-for className in "${class_names[@]}"; do
-    echo "Running tests for - $className"
-    adb shell am instrument -w -e class "$className" app.test/androidx.test.runner.AndroidJUnitRunner
-    adb shell pm clear com.example.cicddemoapp
+for i in {1..5}; do
+    echo "WE ARE IN ITERATION = $i"
+    for className in "${class_names[@]}"; do
+        echo "RUNNING TESTS FOR - $className"
+        adb shell am instrument -w -e class "$className" app.test/androidx.test.runner.AndroidJUnitRunner
+        adb shell pm clear com.example.cicddemoapp
+    done
 done
