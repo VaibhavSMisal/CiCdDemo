@@ -5,10 +5,9 @@ output=$(find ./app/src/androidTest/java/com/example -type f -name '*.kt' | grep
 echo $output
 # Iterate over class names
 IFS=',' read -r -a class_names <<< "$output"
-echo $class_names
 
 for className in "${class_names[@]}"; do
-    echo $className
+    echo "Running tests for - $className"
     adb shell am instrument -w -e class "$className" app.test/androidx.test.runner.AndroidJUnitRunner
     adb shell pm clear com.example.cicddemoapp
 done
