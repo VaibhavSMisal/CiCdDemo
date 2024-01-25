@@ -27,5 +27,5 @@ jobs:
     
     - name: Accessing github output
       run: |
-        echo ${{ steps.set_output.testGlobalVar }}
+        echo ${{ steps.set_output.outputs.testGlobalVar }}
         echo "concatinating global var ${{ steps.set_output.outputs.testGlobalVar }}"
