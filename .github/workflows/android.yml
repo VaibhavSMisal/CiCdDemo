@@ -24,3 +24,14 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
+
+    - name: Setting output to GITHUB_OUTPUT
+      id: set_output
+      run: |
+        testLocalVar = "hello i am local var"
+        echo "testGlobalVar=$testLocalVar" >> $GITHUB_OUTPUT
+    
+    - name: Accessing github output
+      run: |
+        echo ${{ steps.set_output.testGlobalVar }}
+        echo "concatinating global var ${{ steps.set_output.testGlobalVar }}"
