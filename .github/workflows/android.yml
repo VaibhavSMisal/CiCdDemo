@@ -1,5 +1,4 @@
-name: Android CI
-
+name: Performance Profiling
 on:
   push:
     branches: [ "main" ]
@@ -7,20 +6,32 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  app_cache_usage:
+    runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: gradle
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
+          cache: 'gradle'
+
+      - name: Providing permissions
+        run: chmod +x ./gradlew
+
+      - name: Run emulator, Install & launch app, Display cache usage
+        uses: ReactiveCircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          target: google_apis
+          arch: x86_64
+          script: |
+            adb devices
+            ./gradlew installDebug
+            # adb shell am start -n com.example.cicddemoapp/.MainActivity
+            ./gradlew connectedCheck --continue
+            adb logcat -d | grep "Cache size"
