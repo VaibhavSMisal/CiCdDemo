@@ -1,0 +1,11 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# @global-owner1 and @global-owner2 will be requested for
+# review when someone opens a pull request.
+
+# Signal-collection module that collects local and remote signals
+/signal-collection/ @NCK22 @NNKK24
+
+# Group-matching module that collects local and remote signals
+# /group-matching/ @hitesh-temp-account @NCK22 
+/group-matching/ @NCK22 
