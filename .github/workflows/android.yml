@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build_one:
 
     runs-on: ubuntu-latest
 
@@ -33,4 +33,21 @@ jobs:
       id: set_summary
       run: |
         testLocalVar="hello i am the summary"
+        echo "$testLocalVar" >> $GITHUB_STEP_SUMMARY
+
+  build_two:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Setting output to GITHUB_Summary 2
+      id: set_summary2
+      run: |
+        testLocalVar="hello i am the summary 2"
         echo "$testLocalVar" >> $GITHUB_STEP_SUMMARY
