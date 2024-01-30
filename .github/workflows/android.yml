@@ -5,6 +5,8 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 
+env:
+  test_file: test_file.html
 jobs:
   build_one:
 
@@ -29,11 +31,17 @@ jobs:
     #     echo ${{ steps.set_output.outputs.testGlobalVar }}
     #     echo "concatinating global var ${{ steps.set_output.outputs.testGlobalVar }}"
 
+    - name: writing to html file
+      run: |
+        echo "in html file" >> ${{ env.test_file }}
+
     - name: Setting output to GITHUB_Summary
       id: set_summary
       run: |
         testLocalVar="hello i am the summary"
         echo "$testLocalVar" >> $GITHUB_STEP_SUMMARY
+        echo "direct value to summary" >> $GITHUB_STEP_SUMMARY
+        echo ${{ env.test_file }} >> $GITHUB_STEP_SUMMARY
 
     - name: Setting output to GITHUB_Summary in same job different step
       id: set_summary_same_job
