@@ -35,6 +35,12 @@ jobs:
         testLocalVar="hello i am the summary"
         echo "$testLocalVar" >> $GITHUB_STEP_SUMMARY
 
+    - name: Setting output to GITHUB_Summary in same job different step
+      id: set_summary_same_job
+      run: |
+        testLocalVar="hello i am the summary in same job just different step"
+        echo "$testLocalVar" >> $GITHUB_STEP_SUMMARY
+
   build_two:
     runs-on: ubuntu-latest
 
