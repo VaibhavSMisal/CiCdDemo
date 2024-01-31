@@ -1,7 +1,9 @@
 name: Android CI
-
+# just making a change to run automatically on PR, for context of this PR see PR 11.
 on:
   pull_request:
+    branches: [ "main" ]
+  push:
     branches: [ "main" ]
   workflow_dispatch:
 
